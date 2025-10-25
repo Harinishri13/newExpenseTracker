@@ -41,7 +41,9 @@ export default function App() {
   const [editingExpense, setEditingExpense] = useState(null);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { enqueueSnackbar } = useSnackbar ? useSnackbar() : { enqueueSnackbar: () => {} };
+  const { enqueueSnackbar } = useSnackbar
+    ? useSnackbar()
+    : { enqueueSnackbar: () => {} };
 
   useEffect(() => {
     const stored = localStorage.getItem(STORAGE_KEY);
@@ -207,14 +209,24 @@ export default function App() {
           {/* Left column - Wallet & Actions */}
           <div className="bg-white rounded shadow p-4">
             <h2 className="text-lg font-semibold">Wallet Balance</h2>
-            <p className="text-2xl font-bold mt-2">Wallet Balance: ${walletBalance.toFixed(2)}</p>
+            <p className="text-2xl font-bold mt-2">
+              Wallet Balance: ${walletBalance.toFixed(2)}
+            </p>
 
             <div className="mt-4 space-x-2">
-              <button type="button" className="px-3 py-1 border rounded" onClick={openAddBalance}>
+              <button
+                type="button"
+                className="px-3 py-1 border rounded"
+                onClick={openAddBalance}
+              >
                 + Add Income
               </button>
 
-              <button type="button" className="px-3 py-1 border rounded" onClick={openAddExpense}>
+              <button
+                type="button"
+                className="px-3 py-1 border rounded"
+                onClick={openAddExpense}
+              >
                 + Add Expense
               </button>
             </div>
@@ -222,7 +234,12 @@ export default function App() {
             <div className="mt-6">
               <h3 className="font-medium">Quick Summary</h3>
               <p>Total Expenses: {expenses.length}</p>
-              <p>Last expense: {expenses[0] ? `${expenses[0].title} - $${expenses[0].price}` : "—"}</p>
+              <p>
+                Last expense:{" "}
+                {expenses[0]
+                  ? `${expenses[0].title} - $${expenses[0].price}`
+                  : "—"}
+              </p>
             </div>
           </div>
 
@@ -234,9 +251,18 @@ export default function App() {
                 {summaryData.length ? (
                   <ResponsiveContainer width="100%" height={240}>
                     <PieChart>
-                      <Pie data={summaryData} dataKey="value" nameKey="name" innerRadius={50} outerRadius={80}>
+                      <Pie
+                        data={summaryData}
+                        dataKey="value"
+                        nameKey="name"
+                        innerRadius={50}
+                        outerRadius={80}
+                      >
                         {summaryData.map((entry) => (
-                          <Cell key={entry.name} fill={CATEGORY_COLORS[entry.name] || "#cccccc"} />
+                          <Cell
+                            key={entry.name}
+                            fill={CATEGORY_COLORS[entry.name] || "#cccccc"}
+                          />
                         ))}
                       </Pie>
                     </PieChart>
@@ -257,7 +283,10 @@ export default function App() {
                       <Legend />
                       <Bar dataKey="amount">
                         {trendsData.map((entry) => (
-                          <Cell key={entry.category} fill={CATEGORY_COLORS[entry.category] || "#8884d8"} />
+                          <Cell
+                            key={entry.category}
+                            fill={CATEGORY_COLORS[entry.category] || "#8884d8"}
+                          />
                         ))}
                       </Bar>
                     </BarChart>
@@ -269,7 +298,7 @@ export default function App() {
             </div>
 
             <div className="mt-6">
-              <h3 className="font-medium mb-2">Expense History</h3>
+              <h3 className="font-medium mb-2">Transactions</h3>
               <ExpenseList
                 expenses={expenses}
                 onEdit={openEdit}
@@ -280,23 +309,47 @@ export default function App() {
         </div>
 
         {/* Add Balance Modal */}
-        <Modal isOpen={isAddBalanceOpen} onRequestClose={closeAddBalance} contentLabel="Add Balance">
+        <Modal
+          isOpen={isAddBalanceOpen}
+          onRequestClose={closeAddBalance}
+          contentLabel="Add Balance"
+        >
           <div>
             <h2 className="text-xl font-semibold mb-2">Add Balance</h2>
             <form onSubmit={handleAddBalance}>
               <div className="mb-2">
-                <input name="amount" type="number" placeholder="Income Amount" className="w-full p-2 border rounded" />
+                <input
+                  name="amount"
+                  type="number"
+                  placeholder="Income Amount"
+                  className="w-full p-2 border rounded"
+                />
               </div>
               <div className="flex justify-end gap-2">
-                <button type="button" onClick={closeAddBalance} className="px-3 py-1 border rounded">Cancel</button>
-                <button type="submit" className="px-3 py-1 bg-blue-600 text-white rounded">Add Balance</button>
+                <button
+                  type="button"
+                  onClick={closeAddBalance}
+                  className="px-3 py-1 border rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-3 py-1 bg-blue-600 text-white rounded"
+                >
+                  Add Balance
+                </button>
               </div>
             </form>
           </div>
         </Modal>
 
         {/* Add Expense Modal */}
-        <Modal isOpen={isAddExpenseOpen} onRequestClose={closeAddExpense} contentLabel="Add Expense">
+        <Modal
+          isOpen={isAddExpenseOpen}
+          onRequestClose={closeAddExpense}
+          contentLabel="Add Expense"
+        >
           <div>
             <h2 className="text-xl font-semibold mb-2">Add Expense</h2>
             <form onSubmit={handleAddExpense}>
@@ -306,7 +359,11 @@ export default function App() {
               </div>
               <div className="mb-2">
                 <label className="block text-sm">Amount</label>
-                <input name="price" type="number" className="w-full p-2 border rounded" />
+                <input
+                  name="price"
+                  type="number"
+                  className="w-full p-2 border rounded"
+                />
               </div>
               <div className="mb-2">
                 <label className="block text-sm">Category</label>
@@ -322,34 +379,66 @@ export default function App() {
               </div>
               <div className="mb-2">
                 <label className="block text-sm">Date</label>
-                <input name="date" type="date" className="w-full p-2 border rounded" />
+                <input
+                  name="date"
+                  type="date"
+                  className="w-full p-2 border rounded"
+                />
               </div>
 
               <div className="flex justify-end gap-2">
-                <button type="button" onClick={closeAddExpense} className="px-3 py-1 border rounded">Cancel</button>
-                <button type="submit" className="px-3 py-1 bg-blue-600 text-white rounded">Add Expense</button>
+                <button
+                  type="button"
+                  onClick={closeAddExpense}
+                  className="px-3 py-1 border rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-3 py-1 bg-blue-600 text-white rounded"
+                >
+                  Add Expense
+                </button>
               </div>
             </form>
           </div>
         </Modal>
 
         {/* Edit Modal */}
-        <Modal isOpen={isEditOpen} onRequestClose={closeEdit} contentLabel="Edit Expense">
+        <Modal
+          isOpen={isEditOpen}
+          onRequestClose={closeEdit}
+          contentLabel="Edit Expense"
+        >
           <div>
             <h2 className="text-xl font-semibold mb-2">Edit Expense</h2>
             {editingExpense && (
               <form onSubmit={handleEditExpense}>
                 <div className="mb-2">
                   <label className="block text-sm">Title</label>
-                  <input name="title" defaultValue={editingExpense.title} className="w-full p-2 border rounded" />
+                  <input
+                    name="title"
+                    defaultValue={editingExpense.title}
+                    className="w-full p-2 border rounded"
+                  />
                 </div>
                 <div className="mb-2">
                   <label className="block text-sm">Amount</label>
-                  <input name="price" type="number" defaultValue={editingExpense.price} className="w-full p-2 border rounded" />
+                  <input
+                    name="price"
+                    type="number"
+                    defaultValue={editingExpense.price}
+                    className="w-full p-2 border rounded"
+                  />
                 </div>
                 <div className="mb-2">
                   <label className="block text-sm">Category</label>
-                  <select name="category" defaultValue={editingExpense.category} className="w-full p-2 border rounded">
+                  <select
+                    name="category"
+                    defaultValue={editingExpense.category}
+                    className="w-full p-2 border rounded"
+                  >
                     <option value="">Select</option>
                     <option>Food</option>
                     <option>Travel</option>
@@ -361,12 +450,28 @@ export default function App() {
                 </div>
                 <div className="mb-2">
                   <label className="block text-sm">Date</label>
-                  <input name="date" type="date" defaultValue={editingExpense.date} className="w-full p-2 border rounded" />
+                  <input
+                    name="date"
+                    type="date"
+                    defaultValue={editingExpense.date}
+                    className="w-full p-2 border rounded"
+                  />
                 </div>
 
                 <div className="flex justify-end gap-2">
-                  <button type="button" onClick={closeEdit} className="px-3 py-1 border rounded">Cancel</button>
-                  <button type="submit" className="px-3 py-1 bg-blue-600 text-white rounded">Save</button>
+                  <button
+                    type="button"
+                    onClick={closeEdit}
+                    className="px-3 py-1 border rounded"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-3 py-1 bg-blue-600 text-white rounded"
+                  >
+                    Save
+                  </button>
                 </div>
               </form>
             )}
@@ -378,21 +483,35 @@ export default function App() {
 }
 
 function ExpenseList({ expenses, onEdit, onDelete }) {
-  if (!expenses.length) return <p className="text-sm text-gray-500">No expenses recorded.</p>;
+  if (!expenses.length)
+    return <p className="text-sm text-gray-500">No expenses recorded.</p>;
   return (
     <div className="space-y-2">
       {expenses.map((ex) => (
-        <div key={ex.id} className="flex items-center justify-between p-2 border rounded">
+        <div
+          key={ex.id}
+          className="flex items-center justify-between p-2 border rounded"
+        >
           <div>
             <div className="font-medium">{ex.title}</div>
-            <div className="text-sm text-gray-600">{ex.category} • {ex.date}</div>
+            <div className="text-sm text-gray-600">
+              {ex.category} • {ex.date}
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <div className="font-semibold">${ex.price.toFixed(2)}</div>
-            <button onClick={() => onEdit(ex)} aria-label="edit" className="p-2 rounded hover:bg-gray-100">
+            <button
+              onClick={() => onEdit(ex)}
+              aria-label="edit"
+              className="p-2 rounded hover:bg-gray-100"
+            >
               <FiEdit />
             </button>
-            <button onClick={() => onDelete(ex.id)} aria-label="delete" className="p-2 rounded hover:bg-gray-100">
+            <button
+              onClick={() => onDelete(ex.id)}
+              aria-label="delete"
+              className="p-2 rounded hover:bg-gray-100"
+            >
               <FiTrash2 />
             </button>
           </div>
